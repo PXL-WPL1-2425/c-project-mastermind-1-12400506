@@ -33,7 +33,7 @@ namespace MasterMind
                              .Select(_ => allColors[number.Next(allColors.Length)])
                              .ToArray();
 
-            this.Title = $"Secret Code: {string.Join(", ", code)}";
+            this.Title = $"Secret Code: {string.Join(", ", code)}"; // Alleen voor debug/testdoeleinden
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,6 +80,50 @@ namespace MasterMind
                     label.Background = Brushes.Transparent;
                     break;
             }
+        }
+
+        private void testButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] selectedColors = {
+                comboBox1.SelectedItem?.ToString(),
+                comboBox2.SelectedItem?.ToString(),
+                comboBox3.SelectedItem?.ToString(),
+                comboBox4.SelectedItem?.ToString()
+            };
+
+            ResetLabelBorders();
+
+            for (int i = 0; i < selectedColors.Length; i++)
+            {
+                if (selectedColors[i] == code[i])
+                {
+                    GetLabelByIndex(i).BorderBrush = Brushes.DarkRed;
+                }
+                else if (code.Contains(selectedColors[i]))
+                {
+                    GetLabelByIndex(i).BorderBrush = Brushes.Wheat;
+                }
+            }
+        }
+
+        private void ResetLabelBorders()
+        {
+            label1.BorderBrush = Brushes.Black;
+            label2.BorderBrush = Brushes.Black;
+            label3.BorderBrush = Brushes.Black;
+            label4.BorderBrush = Brushes.Black;
+        }
+
+        private Label GetLabelByIndex(int index)
+        {
+            return index switch
+            {
+                0 => label1,
+                1 => label2,
+                2 => label3,
+                3 => label4,
+                _ => throw new ArgumentOutOfRangeException(nameof(index))
+            };
         }
     }
 }

@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="30" Margin="20,20,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label1" HorizontalAlignment="Left" Height="62" Margin="20,60,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
-        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Height="30" Margin="140,20,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label2" HorizontalAlignment="Left" Height="62" Margin="140,60,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
-        <ComboBox x:Name="comboBox3" HorizontalAlignment="Left" Height="30" Margin="260,20,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label3" HorizontalAlignment="Left" Height="62" Margin="260,60,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
-        <ComboBox x:Name="comboBox4" HorizontalAlignment="Left" Height="34" Margin="388,19,0,0" VerticalAlignment="Top" Width="105" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label4" HorizontalAlignment="Left" Height="61" Margin="385,63,0,0" VerticalAlignment="Top" Width="106" BorderBrush="Black" BorderThickness="1" Background="Transparent" RenderTransformOrigin="0.5,0.5">
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="46" Margin="20,21,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Label x:Name="label1" HorizontalAlignment="Left" Height="96" Margin="20,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
+        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Height="46" Margin="208,21,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Label x:Name="label2" HorizontalAlignment="Left" Height="96" Margin="208,83,0,0" VerticalAlignment="Top" Width="158" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
+        <ComboBox x:Name="comboBox3" HorizontalAlignment="Left" Height="46" Margin="397,21,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Label x:Name="label3" HorizontalAlignment="Left" Height="96" Margin="397,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
+        <ComboBox x:Name="comboBox4" HorizontalAlignment="Left" Height="53" Margin="598,19,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Label x:Name="label4" HorizontalAlignment="Left" Height="95" Margin="593,88,0,0" VerticalAlignment="Top" Width="167" BorderBrush="Black" BorderThickness="1" Background="Transparent" RenderTransformOrigin="0.5,0.5">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -20,6 +20,6 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Button Content="Check Code" HorizontalAlignment="Left" Height="40" Margin="190,127,0,0" VerticalAlignment="Top" Width="150"/>
+        <Button x:Name="testButton" Content="Check Code" HorizontalAlignment="Left" Height="63" Margin="287,187,0,0" VerticalAlignment="Top" Width="236" Click="testButton_Click"/>
     </Grid>
 </Window>
