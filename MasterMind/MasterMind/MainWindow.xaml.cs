@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,14 +13,27 @@ using System.Windows.Shapes;
 
 namespace MasterMind
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private string[] allColors = { "Rood", "Geel", "Oranje", "Wit", "Groen", "Blauw" };
+        private string[] code;
         public MainWindow()
         {
             InitializeComponent();
+            generateSecretCode();
         }
-    }
+
+
+        private void generateSecretCode()
+        {
+            Random number = new Random();
+            code = Enumerable.Range(0, 4)
+                                    .Select(_ => allColors[number.Next(allColors.Length)])
+                                    .ToArray();
+
+            // Toon de geheime code in het venstertitel (voor testen)
+            this.Title = $"secret Code: {string.Join(", ", code)}";
+        }
+
+}
 }

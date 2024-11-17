@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ComboBox HorizontalAlignment="Left" Height="55" Margin="73,62,0,0" VerticalAlignment="Top" Width="173"/>
-        <ComboBox HorizontalAlignment="Left" Height="55" Margin="246,62,0,0" VerticalAlignment="Top" Width="173"/>
-        <ComboBox HorizontalAlignment="Left" Height="55" Margin="419,62,0,0" VerticalAlignment="Top" Width="173"/>
-        <ComboBox HorizontalAlignment="Left" Height="55" Margin="597,62,0,0" VerticalAlignment="Top" Width="173"/>
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="55" Margin="73,62,0,0" VerticalAlignment="Top" Width="173"/>
+        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Height="55" Margin="246,62,0,0" VerticalAlignment="Top" Width="173"/>
+        <ComboBox x:Name="comboBox3" HorizontalAlignment="Left" Height="55" Margin="419,62,0,0" VerticalAlignment="Top" Width="173"/>
+        <ComboBox x:Name="comboBox4" HorizontalAlignment="Left" Height="55" Margin="597,62,0,0" VerticalAlignment="Top" Width="173"/>
         <Button Content="check code" HorizontalAlignment="Left" Height="44" Margin="314,140,0,0" VerticalAlignment="Top" Width="192"/>
     </Grid>
 </Window>
