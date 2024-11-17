@@ -20,7 +20,16 @@ namespace MasterMind
         public MainWindow()
         {
             InitializeComponent();
+            InitialiseerComboBoxes();
             generateSecretCode();
+        }
+
+        private void InitialiseerComboBoxes()
+        {
+            comboBox1.ItemsSource = allColors;
+            comboBox2.ItemsSource = allColors;
+            comboBox3.ItemsSource = allColors;
+            comboBox4.ItemsSource = allColors;
         }
 
 
