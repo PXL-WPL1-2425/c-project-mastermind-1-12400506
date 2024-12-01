@@ -222,14 +222,6 @@ namespace MasterMind
                 _ => throw new ArgumentOutOfRangeException(nameof(index))
             };
         }
-
-
-        private void ToggleDebug()
-        {
-            isDebugMode = !isDebugMode;
-            debugTextBox.Visibility = isDebugMode ? Visibility.Visible : Visibility.Hidden;
-        }
-
         private void InitializeTimer()
         {
             timer = new DispatcherTimer
