@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Windows.Shapes;
 
 namespace MasterMind
 {
@@ -96,25 +97,11 @@ namespace MasterMind
         private void testButton_Click(object sender, RoutedEventArgs e)
         {
             string[] selectedColors = {
-                comboBox1.SelectedItem?.ToString(),
-                comboBox2.SelectedItem?.ToString(),
-                comboBox3.SelectedItem?.ToString(),
-                comboBox4.SelectedItem?.ToString()
-            };
-
-
-            ResetLabelBorders();
-            for (int i = 0; i < selectedColors.Length; i++)
-            {
-                if (selectedColors[i] == code[i])
-                {
-                    GetLabelByIndex(i).BorderBrush = Brushes.DarkRed;
-                }
-                else if (code.Contains(selectedColors[i]))
-                {
-                    GetLabelByIndex(i).BorderBrush = Brushes.Wheat;
-                }
-            }
+        comboBox1.SelectedItem?.ToString(),
+        comboBox2.SelectedItem?.ToString(),
+        comboBox3.SelectedItem?.ToString(),
+        comboBox4.SelectedItem?.ToString()
+    };
 
             if (selectedColors.Any(c => c == null))
             {
@@ -122,6 +109,8 @@ namespace MasterMind
                 return;
             }
 
+            ResetLabelBorders();
+            AddAttemptToHistory(selectedColors);
             attempts++;
             UpdateTitle();
 
@@ -133,6 +122,63 @@ namespace MasterMind
             {
                 EndGame(false);
             }
+        }
+
+        private void AddAttemptToHistory(string[] selectedColors)
+        {
+            StackPanel attemptPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(2)
+            };
+
+            for (int i = 0; i < selectedColors.Length; i++)
+            {
+                Rectangle colorBox = new Rectangle
+                {
+                    Width = 180, 
+                    Height = 20, 
+                    Margin = new Thickness(2), 
+                    Fill = GetBrushFromColorName(selectedColors[i]),
+                    Stroke = GetFeedbackBorder(selectedColors[i], i), 
+                    StrokeThickness = 5 
+                };
+                attemptPanel.Children.Add(colorBox);
+            }
+
+            
+            historyPanel.Children.Add(attemptPanel);
+        }
+
+        private Brush GetFeedbackBorder(string color, int index)
+        {
+            if (color == code[index])
+            {
+                return Brushes.DarkRed; 
+            }
+            else if (code.Contains(color))
+            {
+                return Brushes.Wheat; 
+            }
+            else
+            {
+                return Brushes.Black; 
+            }
+        }
+
+        private Brush GetBrushFromColorName(string colorName)
+        {
+            return colorName.ToLower() switch
+            {
+                "rood" => Brushes.Red,
+                "geel" => Brushes.Yellow,
+                "oranje" => Brushes.Orange,
+                "wit" => Brushes.White,
+                "groen" => Brushes.Green,
+                "blauw" => Brushes.Blue,
+                _ => Brushes.Transparent
+            };
         }
 
         private bool IsCodeCracked(string[] selectedColors)
