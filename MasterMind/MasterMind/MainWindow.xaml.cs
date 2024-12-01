@@ -24,6 +24,7 @@ namespace MasterMind
             InitialiseerComboBoxes();
             GenerateSecretCode();
             InitializeTimer();
+            UpdateDebugTextBox();
         }
 
         private void InitialiseerComboBoxes()
@@ -113,6 +114,8 @@ namespace MasterMind
             AddAttemptToHistory(selectedColors);
             attempts++;
             UpdateTitle();
+            int attemptScore = CalculateScore(selectedColors);
+            UpdateScore(attemptScore);
 
             if (IsCodeCracked(selectedColors))
             {
@@ -137,19 +140,49 @@ namespace MasterMind
             {
                 Rectangle colorBox = new Rectangle
                 {
-                    Width = 180, 
-                    Height = 20, 
-                    Margin = new Thickness(2), 
+                    Width = 180,
+                    Height = 20,
+                    Margin = new Thickness(2),
                     Fill = GetBrushFromColorName(selectedColors[i]),
-                    Stroke = GetFeedbackBorder(selectedColors[i], i), 
-                    StrokeThickness = 5 
+                    Stroke = GetFeedbackBorder(selectedColors[i], i),
+                    StrokeThickness = 5
                 };
                 attemptPanel.Children.Add(colorBox);
             }
 
-            
+
             historyPanel.Children.Add(attemptPanel);
         }
+        private void UpdateScore(int penaltyPoints)
+        {
+            int totalScore = 100 - (attempts * penaltyPoints); 
+            if (totalScore < 0) totalScore = 0; 
+            scoreLabel.Content = $"Score: {totalScore} (Strafpunten: {penaltyPoints})";
+        }
+
+        private int CalculateScore(string[] selectedColors)
+        {
+            int totalPenalty = 0;
+
+            for (int i = 0; i < selectedColors.Length; i++)
+            {
+                if (selectedColors[i] == code[i])
+                {
+                    continue;
+                }
+                else if (code.Contains(selectedColors[i]))
+                {
+                    totalPenalty += 1;
+                }
+                else
+                {
+                    totalPenalty += 2;
+                }
+            }
+
+            return totalPenalty; 
+        }
+
 
         private Brush GetFeedbackBorder(string color, int index)
         {
@@ -189,15 +222,30 @@ namespace MasterMind
         private void EndGame(bool isWinner)
         {
             string message = isWinner
-                ? $"Gefeliciteerd! Je hebt de code gekraakt in {attempts} pogingen!"
-                : $"Helaas, je hebt de code niet gekraakt. De geheime code was: {string.Join(", ", code)}.";
+                ? $"Gefeliciteerd! Je hebt de code gekraakt in {attempts} pogingen! Wil je opnieuw spelen?"
+                : $"Helaas, je hebt de code niet gekraakt. De geheime code was: {string.Join(", ", code)}. Wil je opnieuw spelen?";
 
-            MessageBox.Show(message, "Spel Einde", MessageBoxButton.OK, MessageBoxImage.Information);
-            
-            Application.Current.Shutdown();
+            MessageBoxResult result = MessageBox.Show(message, "Spel Einde", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                ResetGame(); // Reset het spel als de speler opnieuw wil spelen
+            }
+            else
+            {
+                Application.Current.Shutdown(); // Sluit de applicatie als de speler niet opnieuw wil spelen
+            }
         }
 
-
+        private void ResetGame()
+        {
+            attempts = 0;
+            historyPanel.Children.Clear();
+            scoreLabel.Content = "Score: 100";
+            GenerateSecretCode();
+            ResetLabelBorders();
+            UpdateTitle();
+        }
 
         private void ResetLabelBorders()
         {
@@ -248,6 +296,19 @@ namespace MasterMind
             UpdateTitle();
         }
 
+        private void UpdateDebugTextBox()
+        {
+            if (isDebugMode)
+            {
+                debugTextBox.Text = $"geheime code:{string.Join(", ", code)}";
+                debugTextBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                debugTextBox.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void DebugShortcut(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F12 && Keyboard.Modifiers == ModifierKeys.Control)
@@ -255,5 +316,11 @@ namespace MasterMind
                 ToggleDebug();
             }
         }
+        private void ToggleDebug()
+        {
+            isDebugMode = !isDebugMode;
+            UpdateDebugTextBox();
+        }
+
     }
 }

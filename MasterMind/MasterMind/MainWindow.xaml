@@ -26,9 +26,10 @@
             </Label.RenderTransform>
         </Label>
         <Button x:Name="testButton" Content="Check Code" HorizontalAlignment="Left" Height="63" Margin="287,187,0,0" VerticalAlignment="Top" Width="236" Click="testButton_Click"/>
-        <TextBox x:Name="debugTextBox" Visibility="Hidden" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Width="20" Height="30"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="200" Width="760" Margin="20,270,0,0">
+        <TextBox x:Name="debugTextBox" IsReadOnly="True" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Margin="10" Foreground="White" Background="Black" IsEnabled="False" BorderBrush="Black" TextAlignment="Center" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" Width="760" Margin="0,270,0,10">
             <StackPanel x:Name="historyPanel" Orientation="Vertical"/>
         </ScrollViewer>
+        <Label x:Name="scoreLabel" Content="Score: 0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="536,201,0,0" FontSize="16" FontWeight="Bold" Width="244" Height="53" />
     </Grid>
 </Window>
