@@ -4,13 +4,13 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="46" Margin="20,21,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label1" HorizontalAlignment="Left" Height="96" Margin="20,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
+        <Label x:Name="label1" HorizontalAlignment="Left" Height="96" Margin="20,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="4" Background="Transparent"/>
         <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Height="46" Margin="208,21,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label2" HorizontalAlignment="Left" Height="96" Margin="208,83,0,0" VerticalAlignment="Top" Width="158" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
+        <Label x:Name="label2" HorizontalAlignment="Left" Height="96" Margin="208,83,0,0" VerticalAlignment="Top" Width="158" BorderBrush="Black" BorderThickness="4" Background="Transparent"/>
         <ComboBox x:Name="comboBox3" HorizontalAlignment="Left" Height="46" Margin="397,21,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label3" HorizontalAlignment="Left" Height="96" Margin="397,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="1" Background="Transparent"/>
+        <Label x:Name="label3" HorizontalAlignment="Left" Height="96" Margin="397,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="4" Background="Transparent"/>
         <ComboBox x:Name="comboBox4" HorizontalAlignment="Left" Height="53" Margin="598,19,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="ComboBox_SelectionChanged"/>
-        <Label x:Name="label4" HorizontalAlignment="Left" Height="95" Margin="593,88,0,0" VerticalAlignment="Top" Width="167" BorderBrush="Black" BorderThickness="1" Background="Transparent" RenderTransformOrigin="0.5,0.5">
+        <Label x:Name="label4" HorizontalAlignment="Left" Height="95" Margin="593,88,0,0" VerticalAlignment="Top" Width="167" BorderBrush="Black" BorderThickness="4" Background="Transparent" RenderTransformOrigin="0.5,0.5">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -21,5 +21,10 @@
             </Label.RenderTransform>
         </Label>
         <Button x:Name="testButton" Content="Check Code" HorizontalAlignment="Left" Height="63" Margin="287,187,0,0" VerticalAlignment="Top" Width="236" Click="testButton_Click"/>
+        <TextBox x:Name="debugTextBox" Visibility="Hidden" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Width="20" Height="30"/>
     </Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="F12" Modifiers="Control" Command="{Binding DebugShortcut}"/>
+    </Window.InputBindings>
+
 </Window>
