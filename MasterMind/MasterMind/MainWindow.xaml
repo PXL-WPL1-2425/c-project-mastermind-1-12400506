@@ -3,13 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="MasterMind.MainWindow"
         Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
-        
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\wrg\Source\Repos\c-project-mastermind-1-12400506\MasterMind\MasterMind\afbeelding\3356248-game-parallax-achtergrond-vector.jpg" />
+    </Window.Background>
     <Window.InputBindings>
         <KeyBinding Key="F12" Modifiers="Control" Command="{Binding DebugShortcut}"/>
     </Window.InputBindings>
-
     <Grid>
-        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="46" Margin="20,21,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="46" Margin="20,21,0,0" VerticalAlignment="Top" Width="157"  SelectionChanged="ComboBox_SelectionChanged"/>
         <Label x:Name="label1" HorizontalAlignment="Left" Height="96" Margin="20,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="4" Background="Transparent"/>
         <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Height="46" Margin="208,21,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="ComboBox_SelectionChanged"/>
         <Label x:Name="label2" HorizontalAlignment="Left" Height="96" Margin="208,83,0,0" VerticalAlignment="Top" Width="158" BorderBrush="Black" BorderThickness="4" Background="Transparent"/>

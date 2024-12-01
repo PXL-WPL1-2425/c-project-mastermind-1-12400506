@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="afbeelding\3356248-game-parallax-achtergrond-vector.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="afbeelding\3356248-game-parallax-achtergrond-vector.jpg" />
+  </ItemGroup>
+
 </Project>
