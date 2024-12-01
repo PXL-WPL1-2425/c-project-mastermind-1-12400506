@@ -27,6 +27,25 @@ namespace MasterMind
             UpdateDebugTextBox();
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+                "Weet je zeker dat je het spel wilt afsluiten?",
+                "Bevestiging",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question
+            );
+
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                e.Cancel = false;
+            }
+        }
+
         private void InitialiseerComboBoxes()
         {
             comboBox1.ItemsSource = allColors;
@@ -229,11 +248,11 @@ namespace MasterMind
 
             if (result == MessageBoxResult.Yes)
             {
-                ResetGame(); // Reset het spel als de speler opnieuw wil spelen
+                ResetGame(); 
             }
             else
             {
-                Application.Current.Shutdown(); // Sluit de applicatie als de speler niet opnieuw wil spelen
+                Application.Current.Shutdown(); 
             }
         }
 
