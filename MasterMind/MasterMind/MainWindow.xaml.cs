@@ -140,7 +140,6 @@ namespace MasterMind
         }
 
 
-        //
         private void GenerateSecretCode()
         {
             Random number = new Random();
