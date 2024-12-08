@@ -113,7 +113,7 @@ namespace MasterMind
 
             MessageBox.Show($"Een van de kleuren in de geheime code is: {hintColor}", "Hint", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            UpdateScore(15); // Voeg strafpunten toe voor de hint
+            UpdateScore(15); 
         }
 
         private void MnuHintCorrectPosition_Click(object sender, RoutedEventArgs e)
@@ -129,12 +129,12 @@ namespace MasterMind
 
             MessageBox.Show($"De kleur op positie {position + 1} is: {code[position]}", "Hint", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            UpdateScore(25); // Voeg strafpunten toe voor de hint
+            UpdateScore(25); 
         }
 
         private void AskForPlayerNames()
         {
-            playerNames.Clear(); // Clear any previous player list
+            playerNames.Clear(); 
 
             bool addMorePlayers = true;
 
@@ -292,9 +292,9 @@ namespace MasterMind
         }
         private void UpdateScore(int penaltyPoints)
         {
-            totalPenaltyPoints += penaltyPoints; // Voeg strafpunten toe aan het totaal
-            int totalScore = 100 - totalPenaltyPoints; // Bereken de nieuwe score
-            if (totalScore < 0) totalScore = 0; // Zorg dat de score niet negatief wordt
+            totalPenaltyPoints += penaltyPoints; 
+            int totalScore = 100 - totalPenaltyPoints; 
+            if (totalScore < 0) totalScore = 0; 
 
             scoreLabel.Content = $"Score: {totalScore} (Strafpunten: {totalPenaltyPoints})";
         }
