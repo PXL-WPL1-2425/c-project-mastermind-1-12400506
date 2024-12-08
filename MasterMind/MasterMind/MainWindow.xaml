@@ -26,6 +26,10 @@
             <MenuItem Header="Instellingen">
                 <MenuItem x:Name="MnuAantalPogingen" Header="Aantal pogingen" Click="MnuAantalPogingen_Click" />
             </MenuItem>
+            <MenuItem Header="Hint">
+                <MenuItem x:Name="MnuHintCorrectColor" Header="Een juiste kleur (15 strafpunten)" Click="MnuHintCorrectColor_Click"/>
+                <MenuItem x:Name="MnuHintCorrectPosition" Header="Een juiste kleur op de juiste plaats (25 strafpunten)" Click="MnuHintCorrectPosition_Click"/>
+            </MenuItem>
         </Menu>
         <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="46" Margin="20,21,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="ComboBox_SelectionChanged" />
         <Label x:Name="label1" HorizontalAlignment="Left" Height="96" Margin="20,83,0,0" VerticalAlignment="Top" Width="157" BorderBrush="Black" BorderThickness="4" Background="Transparent" />

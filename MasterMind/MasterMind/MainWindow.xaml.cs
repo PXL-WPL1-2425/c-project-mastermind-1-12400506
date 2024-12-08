@@ -21,6 +21,7 @@ namespace MasterMind
         private int highscoreCount = 0;
         private List<string> playerNames = new List<string>();
         private int currentPlayerIndex = 0;
+        private int totalPenaltyPoints = 0;
 
         public MainWindow()
         {
@@ -99,6 +100,37 @@ namespace MasterMind
             }
         }
 
+        private void MnuHintCorrectColor_Click(object sender, RoutedEventArgs e)
+        {
+            if (attempts >= maxAttemps)
+            {
+                MessageBox.Show("Je hebt geen pogingen meer over. Je kunt geen hints meer kopen.", "Geen hints beschikbaar", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            Random rand = new Random();
+            string hintColor = code[rand.Next(code.Length)];
+
+            MessageBox.Show($"Een van de kleuren in de geheime code is: {hintColor}", "Hint", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            UpdateScore(15); // Voeg strafpunten toe voor de hint
+        }
+
+        private void MnuHintCorrectPosition_Click(object sender, RoutedEventArgs e)
+        {
+            if (attempts >= maxAttemps)
+            {
+                MessageBox.Show("Je hebt geen pogingen meer over. Je kunt geen hints meer kopen.", "Geen hints beschikbaar", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            Random rand = new Random();
+            int position = rand.Next(code.Length);
+
+            MessageBox.Show($"De kleur op positie {position + 1} is: {code[position]}", "Hint", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            UpdateScore(25); // Voeg strafpunten toe voor de hint
+        }
 
         private void AskForPlayerNames()
         {
@@ -260,9 +292,11 @@ namespace MasterMind
         }
         private void UpdateScore(int penaltyPoints)
         {
-            int totalScore = 100 - (attempts * penaltyPoints); 
-            if (totalScore < 0) totalScore = 0; 
-            scoreLabel.Content = $"Score: {totalScore} (Strafpunten: {penaltyPoints})";
+            totalPenaltyPoints += penaltyPoints; // Voeg strafpunten toe aan het totaal
+            int totalScore = 100 - totalPenaltyPoints; // Bereken de nieuwe score
+            if (totalScore < 0) totalScore = 0; // Zorg dat de score niet negatief wordt
+
+            scoreLabel.Content = $"Score: {totalScore} (Strafpunten: {totalPenaltyPoints})";
         }
 
         private int CalculateScore(string[] selectedColors)
