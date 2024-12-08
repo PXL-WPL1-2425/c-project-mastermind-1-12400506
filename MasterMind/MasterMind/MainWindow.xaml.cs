@@ -14,9 +14,13 @@ namespace MasterMind
         private string[] allColors = { "Rood", "Geel", "Oranje", "Wit", "Groen", "Blauw" };
         private string[] code;
         private int attempts = 0;
-        private const int maxAttemps = 10;
+        private int maxAttemps = 10;
         private DispatcherTimer timer;
         private bool isDebugMode = false;
+        private string[] highscores = new string[15];
+        private int highscoreCount = 0;
+        private List<string> playerNames = new List<string>();
+        private int currentPlayerIndex = 0;
 
         public MainWindow()
         {
@@ -25,6 +29,7 @@ namespace MasterMind
             GenerateSecretCode();
             InitializeTimer();
             UpdateDebugTextBox();
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -46,6 +51,86 @@ namespace MasterMind
             }
         }
 
+        private void MnuNieuwSpel_Click(object sender, RoutedEventArgs e)
+        {
+            if (playerNames == null || playerNames.Count == 0)
+            {
+                AskForPlayerNames();
+            }
+
+            ResetGame();
+        }
+
+            private void MnuHighscores_Click(object sender, RoutedEventArgs e)
+        {
+            var validHighscores = highscores.Where(h => !string.IsNullOrEmpty(h)).ToArray();
+
+            if (validHighscores.Length == 0)
+            {
+                MessageBox.Show("Er zijn nog geen highscores.", "Highscores", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            string highscoreList = string.Join("\n", validHighscores.Select((entry, index) => $"{index + 1}. {entry}"));
+            MessageBox.Show(highscoreList, "Highscores", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void MnuAfsluiten_Click(object sender, RoutedEventArgs e)
+        {
+            Close(); 
+        }
+
+        private void MnuAantalPogingen_Click(object sender, RoutedEventArgs e)
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox(
+                "Voer het maximaal aantal pogingen in (3-20):",
+                "Aantal Pogingen Instellen",
+                maxAttemps.ToString() 
+            );
+
+            if (int.TryParse(input, out int newMaxAttempts) && newMaxAttempts >= 3 && newMaxAttempts <= 20)
+            {
+                maxAttemps = newMaxAttempts;
+                MessageBox.Show($"Het maximaal aantal pogingen is ingesteld op {maxAttemps}.", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Ongeldige invoer! Het aantal pogingen blijft op " + maxAttemps + ".", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+        private void AskForPlayerNames()
+        {
+            playerNames.Clear(); // Clear any previous player list
+
+            bool addMorePlayers = true;
+
+            while (addMorePlayers)
+            {
+                string playerName = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Voer de naam van de speler in:",
+                    "Speler toevoegen",
+                    "");
+
+                if (string.IsNullOrWhiteSpace(playerName))
+                {
+                    MessageBox.Show("Naam mag niet leeg zijn. Probeer opnieuw.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    continue;
+                }
+
+                playerNames.Add(playerName);
+
+                MessageBoxResult result = MessageBox.Show(
+                    "Wil je nog een speler toevoegen?",
+                    "Speler toevoegen",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                addMorePlayers = (result == MessageBoxResult.Yes);
+            }
+        }
+
         private void InitialiseerComboBoxes()
         {
             comboBox1.ItemsSource = allColors;
@@ -53,6 +138,8 @@ namespace MasterMind
             comboBox3.ItemsSource = allColors;
             comboBox4.ItemsSource = allColors;
         }
+
+
 
         private void GenerateSecretCode()
         {
@@ -237,27 +324,62 @@ namespace MasterMind
         {
             return selectedColors.SequenceEqual(code);
         }
-
-        private void EndGame(bool isWinner)
+        private void AddHighscore(string playerName, int attempts, int score)
         {
-            string message = isWinner
-                ? $"Gefeliciteerd! Je hebt de code gekraakt in {attempts} pogingen! Wil je opnieuw spelen?"
-                : $"Helaas, je hebt de code niet gekraakt. De geheime code was: {string.Join(", ", code)}. Wil je opnieuw spelen?";
+            string highscoreEntry = $"{playerName} - [{attempts} pogingen] - [score: {score}/100]";
 
-            MessageBoxResult result = MessageBox.Show(message, "Spel Einde", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if (highscoreCount < highscores.Length)
             {
-                ResetGame(); 
+                highscores[highscoreCount] = highscoreEntry;
+                highscoreCount++;
             }
             else
             {
-                Application.Current.Shutdown(); 
+                highscores[highscores.Length - 1] = highscoreEntry;
             }
+
+            highscores = highscores
+                .Where(h => !string.IsNullOrEmpty(h)) 
+                .OrderByDescending(h => int.Parse(h.Split(':')[1].Split('/')[0])) 
+                .Take(15) 
+                .ToArray();
+        }
+
+        private void EndGame(bool isWinner)
+        {
+            string currentPlayer = playerNames[currentPlayerIndex];
+            string message = isWinner
+                ? $"Gefeliciteerd, {currentPlayer}! Je hebt de code gekraakt in {attempts} pogingen!"
+                : $"Helaas, {currentPlayer}, je hebt de code niet gekraakt. De geheime code was: {string.Join(", ", code)}.";
+
+            int totalScore = 100 - (attempts * 10);
+            if (totalScore < 0) totalScore = 0;
+
+            if (isWinner)
+            {
+                AddHighscore(currentPlayer, attempts, totalScore);
+            }
+
+            MessageBox.Show(message, "Spel Einde", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            currentPlayerIndex = (currentPlayerIndex + 1) % playerNames.Count;
+
+            ResetGame();
         }
 
         private void ResetGame()
         {
+            if (playerNames.Count == 0)
+            {
+                MessageBox.Show("Geen spelers beschikbaar. Voeg spelers toe om het spel te starten.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+
+            string currentPlayer = playerNames[currentPlayerIndex];
+            MessageBox.Show($"Het is nu de beurt van {currentPlayer}. Veel succes!", "Nieuwe Beurt", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
             attempts = 0;
             historyPanel.Children.Clear();
             scoreLabel.Content = "Score: 100";
@@ -266,6 +388,7 @@ namespace MasterMind
             UpdateTitle();
         }
 
+
         private void ResetLabelBorders()
         {
             label1.BorderBrush = Brushes.Black;
@@ -273,10 +396,29 @@ namespace MasterMind
             label3.BorderBrush = Brushes.Black;
             label4.BorderBrush = Brushes.Black;
         }
-        private void UpdateTitle()
-        {
-            this.Title = $"Poging {attempts}/{maxAttemps}";
-        }
+
+
+       private void UpdateTitle()
+{
+    if (playerNames == null || playerNames.Count == 0)
+    {
+        this.Title = "Mastermind - Geen spelers - Poging {attempts}/{maxAttemps}";
+        return; 
+    }
+    if (currentPlayerIndex < 0 || currentPlayerIndex >= playerNames.Count)
+    {
+        currentPlayerIndex = 0; 
+    }
+
+    if (playerNames.Count == 1)
+    {
+        this.Title = $"{playerNames[0]}'s Mastermind - Poging {attempts}/{maxAttemps}";
+    }
+    else
+    {
+        this.Title = $"Mastermind - Speler: {playerNames[currentPlayerIndex]} - Poging {attempts}/{maxAttemps}";
+    }
+}
 
         private Label GetLabelByIndex(int index)
         {
