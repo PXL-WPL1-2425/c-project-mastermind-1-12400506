@@ -264,6 +264,8 @@ namespace MasterMind
             }
         }
 
+
+
         private void AddAttemptToHistory(string[] selectedColors)
         {
             StackPanel attemptPanel = new StackPanel
@@ -282,6 +284,7 @@ namespace MasterMind
                     Margin = new Thickness(2),
                     Fill = GetBrushFromColorName(selectedColors[i]),
                     Stroke = GetFeedbackBorder(selectedColors[i], i),
+                    ToolTip = "witte rand: Juiste kleur, foute positie\n rode rand: Juiste kleur, juiste positie\n geen kleur: Foute kleur",
                     StrokeThickness = 5
                 };
                 attemptPanel.Children.Add(colorBox);
