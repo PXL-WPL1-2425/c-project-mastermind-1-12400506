@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="afbeelding\3356248-game-parallax-achtergrond-vector.jpg" />
+    <Resource Include="afbeelding\3356248-game-parallax-achtergrond-vector.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@
     Width="800"
     Closing="Window_Closing">
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\wrg\Source\Repos\c-project-mastermind-1-12400506\MasterMind\MasterMind\afbeelding\3356248-game-parallax-achtergrond-vector.jpg" />
+        <ImageBrush ImageSource="pack://application:,,,/afbeelding/3356248-game-parallax-achtergrond-vector.jpg" />
     </Window.Background>
     <Window.InputBindings>
         <KeyBinding Key="F12" Modifiers="Control" Command="{Binding DebugShortcut}" />
